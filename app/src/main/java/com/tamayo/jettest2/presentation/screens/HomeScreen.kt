@@ -84,21 +84,20 @@ fun ListGifs(items: List<Data>) {
 @Composable
 fun GifsCard(data: Data) {
 
+    val context = LocalContext.current
+
     Card(modifier = Modifier.fillMaxSize(), elevation = CardDefaults.cardElevation()) {
 
-        val imageLoader = ImageLoader.Builder(LocalContext.current)
-            .components { add(ImageDecoderDecoder.Factory()) }.build()
+        val imageLoader =
+            ImageLoader.Builder(context).components { add(ImageDecoderDecoder.Factory()) }.build()
 
-        Image(modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop,
-            painter = rememberAsyncImagePainter(
-                ImageRequest.Builder(LocalContext.current).data(data.images?.original?.url ?: "").apply(
-                    block = fun ImageRequest.Builder.(){
-                        size(Size.ORIGINAL)
-                    }
-                ).build(), imageLoader = imageLoader
-            ),
-
+        Image(painter = rememberAsyncImagePainter(ImageRequest.Builder(context)
+            .data(data.images?.original?.url ?: "").apply(
+                block = fun ImageRequest.Builder.() {
+                    size(Size.ORIGINAL)
+                }
+            ).build(), imageLoader = imageLoader
+        ),
             contentDescription = "Gif"
         )
 
@@ -135,7 +134,8 @@ fun MySearch(vm: GifsViewModel) {
                     error = false
                     hiddeKeyBoard?.hide()
                     vm.getAllGifs(query.value)
-                    Toast.makeText(context, "Loading gifts wait a moment please", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "Loading gifts wait a moment please", Toast.LENGTH_LONG)
+                        .show()
 
                 }
 
