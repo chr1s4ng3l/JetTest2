@@ -91,13 +91,14 @@ fun GifsCard(data: Data) {
         val imageLoader =
             ImageLoader.Builder(context).components { add(ImageDecoderDecoder.Factory()) }.build()
 
-        Image(painter = rememberAsyncImagePainter(ImageRequest.Builder(context)
-            .data(data.images?.original?.url ?: "").apply(
-                block = fun ImageRequest.Builder.() {
-                    size(Size.ORIGINAL)
-                }
-            ).build(), imageLoader = imageLoader
-        ),
+        Image(modifier = Modifier.fillMaxSize(), contentScale = ContentScale.Crop,
+            painter = rememberAsyncImagePainter(ImageRequest.Builder(context)
+                .data(data.images?.original?.url ?: "").apply(
+                    block = fun ImageRequest.Builder.() {
+                        size(Size.ORIGINAL)
+                    }
+                ).build(), imageLoader = imageLoader
+            ),
             contentDescription = "Gif"
         )
 
