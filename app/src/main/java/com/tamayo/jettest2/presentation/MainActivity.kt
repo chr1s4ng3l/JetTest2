@@ -35,6 +35,7 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     val vm: GifsViewModel = hiltViewModel()
 
+
                     NavHost(navController =  navController, startDestination = "home" ){
                         composable(route = "home"){
                             HomeScreen(vm)

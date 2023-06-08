@@ -16,3 +16,4 @@ class GetAllGifsUseCase @Inject constructor(private val gifsRepository: GifsRepo
         }
     }
 }
+
